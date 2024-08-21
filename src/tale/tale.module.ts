@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { userProviders } from '../providers/user.providers';
+import { TaleController } from './tale.controller';
+import { TaleService } from './tale.service';
 import { DatabaseModule } from 'src/database/database.module';
 import { JwtModule } from '@nestjs/jwt';
 import { constants } from 'src/constants';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from 'src/strategies/local.strategy';
+import { taleProviders } from 'src/providers/tale.providers';
 import { JwtStrategy } from 'src/strategies/jwt.strategy';
-import { verifyPasswordProviders } from '../providers/verify-password.providers';
+import { userProviders } from 'src/providers/user.providers';
 
 @Module({
   imports: [
@@ -19,7 +18,7 @@ import { verifyPasswordProviders } from '../providers/verify-password.providers'
       signOptions: { expiresIn: '1d' },
     })
   ],
-  controllers: [AuthController],
-  providers: [AuthService, ...userProviders, ...verifyPasswordProviders, LocalStrategy, JwtStrategy],
+  controllers: [TaleController],
+  providers: [TaleService, ...taleProviders, ...userProviders, JwtStrategy]
 })
-export class AuthModule { }
+export class TaleModule { }

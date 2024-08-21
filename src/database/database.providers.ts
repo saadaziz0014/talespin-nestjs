@@ -1,10 +1,11 @@
 import * as mongoose from 'mongoose';
+import { constants } from 'src/constants';
 
 export const databaseProviders = [
     {
         provide: "DATABASE_CONNECTION",
         useFactory: (): Promise<typeof mongoose> => {
-            return mongoose.connect("mongodb://localhost:27017/talespin-nest");
+            return mongoose.connect(constants.mongo_uri);
         }
     }
 ]
