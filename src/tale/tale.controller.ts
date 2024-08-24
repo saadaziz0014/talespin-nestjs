@@ -38,4 +38,11 @@ export class TaleController {
     async allTales() {
         return await this.taleService.allTales();
     }
+
+    @Get(":id")
+    async viewTale(@Param("id") id: string, @Req() req: Request) {
+        let user: any = req.user;
+        if (!user) return { error: "User not found" };
+        return await this.taleService.viewTale(id, user.id);
+    }
 }

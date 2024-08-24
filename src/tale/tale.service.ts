@@ -45,4 +45,19 @@ export class TaleService {
         let deleteTale = await this.taleModel.findOneAndUpdate({ _id: id }, { isDeleted: true }, { new: true });
         return deleteTale;
     }
+
+    async viewTale(id: string, userId: string): Promise<any> {
+        let findTale = await this.taleModel.findOne({ _id: id });
+        if (!findTale) {
+            return { error: "Tale not found" };
+        }
+        if (findTale.author.toString() == userId) {
+            return findTale;
+        }
+        let existUser = findTale.views.find((user) => user.toString() == userId);
+        if (!existUser) {
+            let updateTale = await this.taleModel.findOneAndUpdate({ _id: id }, { $push: { views: userId } }, { new: true });
+            return updateTale;
+        }
+    }
 }
